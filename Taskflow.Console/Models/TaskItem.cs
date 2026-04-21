@@ -1,6 +1,8 @@
-﻿namespace Taskflow.Console.Models
+﻿using Taskflow.Console.Interfaces;
+
+namespace Taskflow.Console.Models
 {
-	public class TaskItem
+	public class TaskItem : IDescribable, ICompletable
 	{
 		public int Id { get; set; }
 		public string Title { get; set; }

@@ -1,8 +1,8 @@
-using System.Collections.Generic;
+using Taskflow.Console.Interfaces;
 
 namespace Taskflow.Console.Models
 {
-    public abstract class User
+    public abstract class User : IDescribable, IPermissioned
     {
         public int Id { get; set; }
         public string FullName { get; set; }

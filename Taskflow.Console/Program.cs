@@ -1,35 +1,48 @@
 ﻿using Taskflow.Console.Models;
+using Taskflow.Console.Interfaces;
 
-List<User> users = new List<User>();
+List<IDescribable> usersAndTasks = new List<IDescribable>();
+
 Admin user1 = new Admin("Harry Potter", "hpotter@gmail.com");
 Member user2 = new Member("Ron Weasley", "rweasley@gmail.com");
 Member user3 = new Member("Hermione Granger", "hgranger@gmail.com");
 
-users.Add(user1);
-users.Add(user2);
-users.Add(user3);
-
-List<TaskItem> tasks = new List<TaskItem>();
 TaskItem task1 = new TaskItem("Send emails", user1, "Low");
 TaskItem task2 = new TaskItem("Clean office", user2, "Medium");
 TaskItem task3 = new TaskItem("Gather supplies", user3, "High");
+
+usersAndTasks.Add(user1);
+usersAndTasks.Add(user2);
+usersAndTasks.Add(user3);
+
+usersAndTasks.Add(task1);
+usersAndTasks.Add(task2);
+usersAndTasks.Add(task3);
+
+foreach (IDescribable item in usersAndTasks)
+{
+    Console.WriteLine(item.GetSummary());
+}
+
+List<ICompletable> tasks = new List<ICompletable>();
 
 tasks.Add(task1);
 tasks.Add(task2);
 tasks.Add(task3);
 
-foreach (User user in users)
-{
-    Console.WriteLine(user.GetSummary());
-    Console.WriteLine(string.Join(", ", user.GetPermissions()));
-}
-
-foreach(TaskItem task in tasks)
-{
-    Console.WriteLine(task.GetSummary());
-}
-
-task1.Complete();
-Console.WriteLine("\nAfter completing TaskItem1:");
+CompleteAll(tasks);
+Console.WriteLine("\nAfter completing all tasks:");
 Console.WriteLine(task1.GetSummary());
+Console.WriteLine(task2.GetSummary());
+Console.WriteLine(task3.GetSummary());
+
+
 Console.ReadLine();
+
+static void CompleteAll(List<ICompletable> items)
+{
+    foreach(ICompletable taskItem in items)
+    {
+        taskItem.Complete();
+    }
+}

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Taskflow.Console.Models
 {
     public class Admin : User
