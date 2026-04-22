@@ -1,4 +1,5 @@
 using Taskflow.Console.Interfaces;
+using Taskflow.Console.Exceptions;
 
 namespace Taskflow.Console.Models
 {
@@ -10,8 +11,20 @@ namespace Taskflow.Console.Models
 
         public User(string fullName, string email)
         {
+            if (string.IsNullOrWhiteSpace(fullName))
+            {
+                throw new ArgumentException($"Invalid input - User name must have a value");
+            }
             FullName = fullName;
-            Email = email;
+
+            if (email.Contains('@') && email.Contains('.'))
+            {
+                Email = email;
+            }
+            else
+            {
+                throw new InvalidEmailException(email);
+            }
         }
 
         public abstract string GetSummary();

@@ -1,7 +1,34 @@
 ﻿using Taskflow.Console.Models;
 using Taskflow.Console.Interfaces;
+using Taskflow.Console.Exceptions;
 
 List<IDescribable> usersAndTasks = new List<IDescribable>();
+
+try
+{
+    new Admin("", "hpotter@gmail.com");
+}
+catch (ArgumentException ex)
+{
+    Console.WriteLine($"{ex.Message}");
+}
+catch (InvalidEmailException ex)
+{
+    Console.WriteLine($"{ex.Message}");
+}
+
+try
+{
+    new Member("Ron Weasley", "not-an-email");
+}
+catch (ArgumentException ex)
+{
+    Console.WriteLine($"{ex.Message}");
+}
+catch (InvalidEmailException ex)
+{
+    Console.WriteLine($"{ex.Message}");
+}
 
 Admin user1 = new Admin("Harry Potter", "hpotter@gmail.com");
 Member user2 = new Member("Ron Weasley", "rweasley@gmail.com");
@@ -35,7 +62,6 @@ Console.WriteLine("\nAfter completing all tasks:");
 Console.WriteLine(task1.GetSummary());
 Console.WriteLine(task2.GetSummary());
 Console.WriteLine(task3.GetSummary());
-
 
 Console.ReadLine();
 

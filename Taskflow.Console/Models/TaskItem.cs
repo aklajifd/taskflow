@@ -1,4 +1,5 @@
 ﻿using Taskflow.Console.Interfaces;
+using Taskflow.Console.Exceptions;
 
 namespace Taskflow.Console.Models
 {
@@ -13,11 +14,21 @@ namespace Taskflow.Console.Models
 
 		public TaskItem(string title, User assignedTo, string priority = "Medium")
 		{
+			if (string.IsNullOrWhiteSpace(title))
+			{
+				throw new ArgumentException($"Invalid input - Title must have a value");
+			}
 			Title = title;
+
+			if (assignedTo is null)
+			{
+				throw new ArgumentNullException("Invalid input - Assigned To must have a value");
+			}
 			AssignedTo = assignedTo;
+
 			Description = string.Empty;
 			IsComplete = false;
-			Priority = priority;
+			SetPriority(priority);
 		}
 
 		public void Complete()
@@ -29,6 +40,15 @@ namespace Taskflow.Console.Models
 		{
 			string status = IsComplete ? "COMPLETE" : "INCOMPLETE";
 			return $"[{status}][{Priority}] {Title} - Assigned to: {AssignedTo.FullName}";
+		}
+
+		public void SetPriority(string priority)
+		{
+			if (priority != "Low" && priority != "Medium" && priority != "High")
+			{
+				throw new InvalidPriorityException(priority);
+			}
+			Priority = priority;
 		}
 	}
 }
