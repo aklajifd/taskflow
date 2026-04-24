@@ -1,9 +1,10 @@
 ﻿using Taskflow.Console.Interfaces;
 using Taskflow.Console.Exceptions;
+using Taskflow.Console.Repositories;
 
 namespace Taskflow.Console.Models
 {
-	public class TaskItem : IDescribable, ICompletable
+	public class TaskItem : IDescribable, ICompletable, IEntity
 	{
 		public int Id { get; set; }
 		public string Title { get; set; }

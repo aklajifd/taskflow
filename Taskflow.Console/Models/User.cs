@@ -1,9 +1,10 @@
 using Taskflow.Console.Interfaces;
 using Taskflow.Console.Exceptions;
+using Taskflow.Console.Repositories;
 
 namespace Taskflow.Console.Models
 {
-    public abstract class User : IDescribable, IPermissioned
+    public abstract class User : IDescribable, IPermissioned, IEntity
     {
         public int Id { get; set; }
         public string FullName { get; set; }
