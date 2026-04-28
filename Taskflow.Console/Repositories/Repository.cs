@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Taskflow.Console.Interfaces;
 
 namespace Taskflow.Console.Repositories
@@ -15,15 +18,7 @@ namespace Taskflow.Console.Repositories
 
         public List<T> GetAll() => _items;
 
-        public T? GetById(int id)
-        {
-            foreach(T item in _items)
-            {
-                if (item.Id == id) return item;
-                
-            }
-            return null;
-        }
+        public T? GetById(int id) => Find(t => t.Id == id);
 
         public void Delete(int id)
         {
@@ -35,5 +30,30 @@ namespace Taskflow.Console.Repositories
         }
 
         public int Count => _items.Count;
+
+        public T? Find(Func<T, bool> predicate)
+        {
+            return _items.FirstOrDefault(predicate);
+        }
+
+        public List<T> Filter(Func<T, bool> predicate)
+        {
+            return _items.Where(predicate).ToList();
+        }
+
+        public List<T> GetAllOrdered<TKey>(Func<T, TKey> keySelector)
+        {
+            return _items.OrderBy(keySelector).ToList();
+        }
+
+        public bool Exists(Func<T, bool> predicate)
+        {
+            return _items.Any(predicate);
+        }
+
+        public int CountWhere(Func<T, bool> predicate)
+        {
+            return _items.Count(predicate);
+        }
     }
 }
